@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            #start{
+    background-color: gray;
+}
+.hidden{
+    color:#ddd;
+}
+.hidden:hover{
+    /* background-color: #3297FD; */
+    color: black;
+    cursor: pointer;
+}
+.container button{
+    margin-right:20px;
+    margin-top: 20px;
+    width: 100px;
+}
+.container{
+    display: flex;
+    background-color: #ddd;
+    border: 1px solid #ddd;
+    flex-direction: column;
+}
+.container input{
+    width: 10%;
+    padding: 10px;
+}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h4>Number guessing game</h4>
+            <p>In this game a random number will be generated between 1 to 10 you have to guess it to win</p>
+                <p>Enter any number</p>
+                <input type="number" id="num" min="1" max="10">
+        </br>
+            <button id="submit" >Submit</button>
+            <button id="start" >StartGame</button>
+            <p id="result">Result will be displayed here</p>
+            <p class="hidden">Hack: press ctrl+shift+i then see value of randomNumber in console</p>
+        </div>
+    </body>
+<script src="main.js"></script>    
+<script>
+    
+    let randomNumber = -1;
+    let startBtn = document.getElementById('start');
+    let submitBtn = document.getElementById('submit');
+    let resultEl = document.getElementById('result');
+    startBtn.addEventListener('click',startGame); 
+    submitBtn.addEventListener('click',numbergame);
+    function numbergame()
+    { 
+        if(randomNumber == -1)
+        {
+            randomNumber = randomNumberGenerator();
+        }
+        else
+        {
+            resultEl.style.color='black';
+            let guessNumber = document.getElementById('num').value;
+            if (guessNumber == randomNumber)
+            {
+                resultEl.style.color='green';
+                resultEl.textContent= 'Congratulation you guessed the number correctly New random number generated';
+                startGame();
+                }
+                else if(guessNumber > randomNumber)
+                {
+                    resultEl.style.color='red';
+                    resultEl.textContent='Its smaller than '+guessNumber;
+                }
+            else 
+                {
+                    resultEl.style.color='red';
+                    resultEl.textContent='Its greater than '+guessNumber;
+                }
+        }
+    }
+    function randomNumberGenerator()
+    {
+        let randomNumber;
+        randomNumber = Math.random()*10;
+        randomNumber = 1+Math.floor(randomNumber);
+        return randomNumber;
+    }
+    function startGame()
+    {
+    startBtn.style.backgroundColor = 'green';
+    randomNumber=-1;
+    numbergame();
+    }
+</script>
+</html>
